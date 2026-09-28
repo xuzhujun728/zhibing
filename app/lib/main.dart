@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'app_drawer.dart';
 import 'db.dart';
 import 'record.dart';
 import 'record_detail_page.dart';
@@ -104,6 +105,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('治病诊疗记录'), centerTitle: true),
+      drawer: const AppDrawer(current: '/'),
       body: SafeArea(
         child: Column(
         children: [
