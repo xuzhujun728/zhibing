@@ -147,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                                 '${r.name.isEmpty ? '(未命名)' : r.name}　${r.updatedAt}'),
                             subtitle: Text(
                               '病经：${r.meridian.isEmpty ? '未定' : r.meridian}｜'
-                              '治法：${r.treatMethod.isEmpty ? '未填' : r.treatMethod}',
+                              '治法：${r.treatRecord.isEmpty ? '未填' : r.treatRecord}',
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),

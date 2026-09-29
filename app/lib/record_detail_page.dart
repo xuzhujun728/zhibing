@@ -128,11 +128,7 @@ class RecordDetailPage extends StatelessWidget {
                 _row('虚证', r.xuNote),
               ]),
               _section('治疗记录', Icons.history, [
-                _row('开始时间', r.treatStart),
-                _row('持续时间', r.treatDuration),
-                _row('治法', r.treatMethod),
-                _row('治法缘由', r.treatReason),
-                _row('补充记录', r.treatExtra),
+                _row('记录', r.treatRecord),
               ]),
               _section('分析结论', Icons.analytics, [
                 _row('结论', r.analysis),

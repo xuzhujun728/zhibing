@@ -44,12 +44,8 @@ class MedicalRecord {
   String shiHerb; // 实证-中药法
   String xuNote; // 虚证
 
-  // 治疗记录
-  String treatStart; // 开始时间
-  String treatDuration; // 持续时间
-  String treatMethod; // 治法
-  String treatReason; // 治法缘由
-  String treatExtra; // 补充记录
+  // 治疗记录（单个文本框自由填写）
+  String treatRecord;
 
   // 分析结论
   String analysis;
@@ -86,11 +82,7 @@ class MedicalRecord {
     this.shiMagnet = '',
     this.shiHerb = '',
     this.xuNote = '',
-    this.treatStart = '',
-    this.treatDuration = '',
-    this.treatMethod = '',
-    this.treatReason = '',
-    this.treatExtra = '',
+    this.treatRecord = '',
     this.analysis = '',
   });
 
@@ -126,11 +118,7 @@ class MedicalRecord {
         shiMagnet: '${m['shiMagnet'] ?? ''}',
         shiHerb: '${m['shiHerb'] ?? ''}',
         xuNote: '${m['xuNote'] ?? ''}',
-        treatStart: '${m['treatStart'] ?? ''}',
-        treatDuration: '${m['treatDuration'] ?? ''}',
-        treatMethod: '${m['treatMethod'] ?? ''}',
-        treatReason: '${m['treatReason'] ?? ''}',
-        treatExtra: '${m['treatExtra'] ?? ''}',
+        treatRecord: '${m['treatRecord'] ?? ''}',
         analysis: '${m['analysis'] ?? ''}',
       );
 
@@ -166,11 +154,7 @@ class MedicalRecord {
         'shiMagnet': shiMagnet,
         'shiHerb': shiHerb,
         'xuNote': xuNote,
-        'treatStart': treatStart,
-        'treatDuration': treatDuration,
-        'treatMethod': treatMethod,
-        'treatReason': treatReason,
-        'treatExtra': treatExtra,
+        'treatRecord': treatRecord,
         'analysis': analysis,
       };
 
@@ -218,9 +202,7 @@ class MedicalRecord {
     b.writeln('- 实证-中药：$shiHerb');
     b.writeln('- 虚证：$xuNote');
     b.writeln('\n治疗记录');
-    b.writeln('- 开始时间：$treatStart，持续时间：$treatDuration');
-    b.writeln('- 治法：$treatMethod，缘由：$treatReason');
-    b.writeln('- 补充：$treatExtra');
+    b.writeln(treatRecord.isEmpty ? '（未填）' : treatRecord);
     b.writeln('\n分析结论');
     b.writeln(analysis.isEmpty ? '（暂无）' : analysis);
     return b.toString();
@@ -250,7 +232,7 @@ String analyzeRecord(MedicalRecord r) {
   if (r.shiMagnet.trim().isEmpty && r.shiHerb.trim().isEmpty && r.xuNote.trim().isEmpty) {
     tips.add('治疗方案为空：实证磁疗可用补/泻、实证中药用泻法；虚证磁疗与中药均用补法。');
   }
-  if (r.treatMethod.trim().isEmpty) tips.add('治疗记录缺少治法，建议补填开始时间、持续时间、治法与缘由。');
+  if (r.treatRecord.trim().isEmpty) tips.add('治疗记录为空，建议记录治疗时间、治法与缘由。');
   if (r.tongueCoating.trim().isEmpty && r.tongueEdge.trim().isEmpty) {
     tips.add('舌象未填，舌苔/舌边有助于辨虚实。');
   }

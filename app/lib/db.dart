@@ -12,7 +12,7 @@ class RecordDb {
     final path = await databasePath();
     _db = await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: (d, v) async {
         await d.execute('''CREATE TABLE records(
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -27,10 +27,14 @@ class RecordDb {
           palpRightArm TEXT, palpRightLeg TEXT, palpExtra TEXT,
           meridian TEXT,
           shiMagnet TEXT, shiHerb TEXT, xuNote TEXT,
-          treatStart TEXT, treatDuration TEXT, treatMethod TEXT,
-          treatReason TEXT, treatExtra TEXT,
+          treatRecord TEXT,
           analysis TEXT
         )''');
+      },
+      onUpgrade: (d, oldV, newV) async {
+        if (oldV < 2) {
+          await d.execute('ALTER TABLE records ADD COLUMN treatRecord TEXT');
+        }
       },
     );
     return _db!;
@@ -99,7 +103,7 @@ class RecordDb {
       rows = await d.query(
         'records',
         where: 'name LIKE ? OR meridian LIKE ? OR analysis LIKE ? '
-            'OR head LIKE ? OR wholeBody LIKE ? OR treatMethod LIKE ?',
+            'OR head LIKE ? OR wholeBody LIKE ? OR treatRecord LIKE ?',
         whereArgs: List.filled(6, '%$k%'),
         orderBy: 'id DESC',
       );
